@@ -1,0 +1,68 @@
+name: local-odc-env
+channels:
+  - conda-forge
+dependencies:
+  # base
+  - python=3.12.3
+  - gdal
+  - libgdal
+  - libgdal-arrow-parquet
+  - postgresql
+  # datacube + optional dependencies
+  - datacube
+  - boto3
+  - botocore
+  - bottleneck
+  - ciso8601
+  # ODC ecosystem libraries
+  - eodatasets3
+  - odc-apps-dc-tools==1.9.2
+  - odc-cloud
+  - aiobotocore[boto3]
+  - odc-dscache
+  - odc-geo
+  - odc-loader
+  - odc-stac
+  # required for odc-stats==1.0.60
+  - odc-algo==0.2.3
+  # dask + extras
+  - dask
+  - distributed
+  - lz4
+  # fsspec + extras
+  - fsspec
+  - gcsfs
+  - s3fs
+  # xarray + extras
+  - xarray
+  - cftime
+  - opt_einsum
+  - flox
+  - h5netcdf
+  - netCDF4
+  - numba
+  - numbagg
+  - pooch
+  - pydap
+  - zarr
+  # Jupyter
+  - jupytergis 
+  - qgis
+  - jupyterlab_iframe
+  - jupyter-resource-usage
+  - nodejs
+  # Jupyter Ai
+  - jupyter-ai
+  - langchain-google-genai
+  # developer tools
+  - curl
+  - make
+  - wget
+  - unzip
+  # required for building hdstats
+  - compilers 
+  # packages requiring pip
+  - pip:
+    - assets/tflite_runtime-2.20.0-cp312-cp312-linux_x86_64.whl
+    - memory-profiler
+    - odc-stats==1.0.60

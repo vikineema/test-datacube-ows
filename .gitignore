@@ -1,0 +1,30 @@
+# Ignore template files
+products/**
+# Visual Studio Cache files
+*.cache/**
+# Jupyter metadata files
+*.config/**
+*.ipython/**
+*.jupyter/**
+*.local/**
+*.npm/**
+**/.ipynb_checkpoints/**
+**/.jupyter_ystore.db
+# Bash files
+.bash_history
+# Dev containers files
+*.ssh/**
+*.vscode/**
+*.vscode-server/**
+*.dotnet/**
+# Python install files
+**/__pycache__/**
+**/*.egg-info/**
+**/build/**
+**/dist/**
+**/*.egg/**
+# Memory profiler files
+core
+mprofile_*
+# secrets
+**/.env
