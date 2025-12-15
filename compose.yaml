@@ -1,8 +1,6 @@
 services:
   db:
     image: kartoza/postgis:latest
-    # volumes:
-      # - postgis-data:/var/lib/postgresql
     ports:
         - ${POSTGRES_PORT}:5432
     environment:
@@ -25,11 +23,10 @@ services:
       context: .
       dockerfile: docker/Dockerfile
     environment:
-      - DB_HOSTNAME=db
-      - DB_DATABASE=opendatacube
-      - DB_PASSWORD=${POSTGRES_PASS}
-      - DB_USERNAME=${POSTGRES_USER}
-      - DB_PORT=5432
+      # $ODC_{environment name}_{option name}
+      - ODC_DEFAULT_INDEX_DRIVER=postgis
+      # Database connection URL: postgresql://<username>:<password>@<hostname>:<port>/<database>
+      - ODC_DEFAULT_DB_URL="postgresql://${POSTGRES_USER}:${POSTGRES_PASS}@db:5432/${POSTGRES_DB}"
       - GS_NO_SIGN_REQUEST=YES
       - AWS_NO_SIGN_REQUEST=YES
       - AWS_DEFAULT_REGION=af-south-1
@@ -40,35 +37,9 @@ services:
     ports:
       - ${JUPYTER_PORT}:${JUPYTER_PORT}
     volumes:
-      - .:/home/jovyan/
+      - ./products:/home/jovyan/products
+      - ./notebooks:/home/jovyan/notebooks
     depends_on:
         db:
           condition: service_healthy
     restart: always
-
-  explorer:
-    image: opendatacube/explorer:latest
-    environment:
-    # - DB_HOSTNAME=host.docker.internal
-    - POSTGRES_HOSTNAME=db
-    - POSTGRES_USER=${POSTGRES_USER}
-    - POSTGRES_PASSWORD=${POSTGRES_PASS}
-    - POSTGRES_DB=opendatacube
-    - POSTGRES_PORT=5432
-    - ODC_DEFAULT_INDEX_DRIVER=postgres
-    - ODC_POSTGIS_INDEX_DRIVER=postgis
-    - ODC_DEFAULT_DB_URL=postgresql://${POSTGRES_USER}:${POSTGRES_PASS}@db:5432/opendatacube
-    - ODC_POSTGIS_DB_URL=postgresql://${POSTGRES_USER}:${POSTGRES_PASS}@db:5432/opendatacube
-    - FLASK_ENV=development
-    - FLASK_APP=cubedash
-    - FLASK_DEBUG=1
-    - CUBEDASH_DEFAULT_TIMEZONE=${CUBEDASH_DEFAULT_TIMEZONE}
-    - GS_NO_SIGN_REQUEST=YES
-    - AWS_NO_SIGN_REQUEST=YES
-    - CUBEDASH_DATA_S3_REGION="af-south-1"
-    - AWS_S3_ENDPOINT=https://s3.af-south-1.amazonaws.com
-    # - VIRTUAL_HOST=datacube.explorer
-    depends_on:
-      - db
-    ports:
-      - ${EXPLORER_PORT}:8080
