@@ -3,7 +3,17 @@ from ows_refactored.water_quality.style_wq_annual_cfg import style_wq_annual_tsm
 
 layer = {
     "title": "Annual Water Quality Variables",
-    "abstract": """Annual Water Quality Variables""",
+    "abstract": """The Digital Earth Africa water quality service
+provides annual water quality data for surface water bodies derived from a
+variety of optical sensors, at a spatial resolution of 10 meters. The data is
+available from the year 2000 to 2024.
+
+More technical information about the Water Quality Service can be found in the
+User Guide (https://docs.digitalearthafrica.org/en/latest/data_specs/<insert page>.html)
+This service is accessible through OGC Web Service (https://ows.digitalearth.africa/),
+for analysis in DE Africa Sandbox (sandbox.digitalearth.africa) and for direct download
+click on a tile in the explorer page (https://explorer.dev.digitalearth.africa/products/wq_annual).
+""",
     "name": "wq_annual",
     "product_name": "wq_annual",
     "multi_product": False,
@@ -21,5 +31,9 @@ layer = {
         "fuse_func": None,
         "manual_merge": False,
     },
-    "styling": {"default_style": "wq_annual_tsm", "styles": [style_wq_annual_tsm]},
+    "styling": {
+        # The default_style must match the style's "name" field.
+        "default_style": "wq_annual_tsm",
+        "styles": [style_wq_annual_tsm],
+    },
 }

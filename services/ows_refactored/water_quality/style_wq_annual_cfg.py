@@ -1,3 +1,12 @@
+"""
+Water Quality Style Configuration for Digital Earth Africa OWS
+================================================================
+
+Style definitions for water quality parameters
+Organized by parameter and sensor/source type.
+
+"""
+
 # ============================================================================
 # TOTAL SUSPENDED MATTER (TSM) STYLES
 # ============================================================================
@@ -36,7 +45,7 @@ legend = {
 style_wq_annual_tsm = {
     "name": "wq_annual_tsm",
     "title": "Total Suspended Matter (TSM)",
-    "abstract": "Total Suspended Matter (TSM) variable",
+    "abstract": "Total suspended matter concentration (mg/L) in surface water bodies",
     "legend": legend,
     "needed_bands": ["tsm"],
     "index_function": {

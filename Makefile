@@ -34,7 +34,7 @@ jupyter-shell: ## Open shell in jupyter service
 	docker compose  exec jupyter /bin/bash
 
 lint-src:
-	docker compose  exec jupyter bash -c "ruff check --select I --fix services/"          
+	docker compose  exec jupyter bash -c "ruff check --fix --unsafe-fixes services/"          
 	docker compose  exec jupyter bash -c "ruff format --verbose services/"
 
 ## Explorer

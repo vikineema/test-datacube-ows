@@ -40,6 +40,8 @@ services:
       - ./products:/home/jovyan/products
       - ./notebooks:/home/jovyan/notebooks
       - ./services:/home/jovyan/services
+      - ./ruff.toml:/home/jovyan/ruff.toml
+
     depends_on:
         db:
           condition: service_healthy
