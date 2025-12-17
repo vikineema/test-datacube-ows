@@ -27,11 +27,15 @@ add-products: ## Add products to the datacube database:
 
 index-datasets: ## Index datasets from a given path
 	docker compose  exec jupyter s3-to-dc \
-		s3://<bucket_name>/<prefix>/**/*.json \
-		--no-sign-request --allow-unsafe --stac --log=info <product_name>
+		"s3://deafrica-water-quality-dev/mapping/wq_annual/1-0-0/x200/y034/*/*.stac-item.json" \
+		--no-sign-request --allow-unsafe --stac --log=info wq_annual
 
 jupyter-shell: ## Open shell in jupyter service
 	docker compose  exec jupyter /bin/bash
+
+lint-src:
+	docker compose  exec jupyter bash -c "ruff check --select I --fix services/"          
+	docker compose  exec jupyter bash -c "ruff format --verbose services/"
 
 ## Explorer
 setup-explorer: ## Setup the datacube explorer
@@ -45,3 +49,22 @@ explorer-refresh-products:
 
 explorer-shell: ## Open shell in explorer service
 	docker compose exec explorer /bin/bash
+
+## OWS
+setup-ows: ## Setup the datacube OWS
+	docker compose up ows
+
+ows-shell: ## Open shell in ows service
+	docker compose exec ows /bin/bash
+
+reset: down up init add-products index-datasets setup-explorer setup-ows
+
+refresh-views:
+	docker compose exec ows datacube-ows-update --views
+
+refresh-range:
+	docker compose exec ows datacube-ows-update wq_annual
+
+ows-init:
+	#docker compose exec ows datacube-ows-update --init
+	docker compose exec ows datacube-ows-update --schema

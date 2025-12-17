@@ -26,7 +26,7 @@ services:
       # $ODC_{environment name}_{option name}
       - ODC_DEFAULT_INDEX_DRIVER=postgis
       # Database connection URL: postgresql://<username>:<password>@<hostname>:<port>/<database>
-      - ODC_DEFAULT_DB_URL="postgresql://${POSTGRES_USER}:${POSTGRES_PASS}@db:5432/${POSTGRES_DB}"
+      - ODC_DEFAULT_DB_URL=postgresql://${POSTGRES_USER}:${POSTGRES_PASS}@db:5432/${POSTGRES_DB}
       - GS_NO_SIGN_REQUEST=YES
       - AWS_NO_SIGN_REQUEST=YES
       - AWS_DEFAULT_REGION=af-south-1
@@ -39,7 +39,47 @@ services:
     volumes:
       - ./products:/home/jovyan/products
       - ./notebooks:/home/jovyan/notebooks
+      - ./services:/home/jovyan/services
     depends_on:
         db:
           condition: service_healthy
     restart: always
+
+  explorer:
+    image: opendatacube/explorer:3.1.0-49-g8fc48b0a
+    environment:
+      # $ODC_{environment name}_{option name}
+      - ODC_DEFAULT_INDEX_DRIVER=postgis
+      # Database connection URL: postgresql://<username>:<password>@<hostname>:<port>/<database>
+      - ODC_DEFAULT_DB_URL=postgresql://${POSTGRES_USER}:${POSTGRES_PASS}@db:5432/${POSTGRES_DB}
+      - FLASK_ENV=development
+      - FLASK_APP=cubedash
+      - FLASK_DEBUG=1
+      - CUBEDASH_DEFAULT_TIMEZONE=${CUBEDASH_DEFAULT_TIMEZONE}
+      - GS_NO_SIGN_REQUEST=YES
+      - AWS_NO_SIGN_REQUEST=YES
+      - CUBEDASH_DATA_S3_REGION="af-south-1"
+      - AWS_S3_ENDPOINT=https://s3.af-south-1.amazonaws.com
+      # - VIRTUAL_HOST=datacube.explorer
+    depends_on:
+      - db
+    ports:
+      - ${EXPLORER_PORT}:8080
+
+  ows:
+    image: ghcr.io/opendatacube/ows:develop
+    environment:
+      - ODC_ENVIRONMENT=default
+      - ODC_DEFAULT_INDEX_DRIVER=postgis
+      - ODC_DEFAULT_DB_URL=postgresql://${POSTGRES_USER}:${POSTGRES_PASS}@db:5432/${POSTGRES_DB}
+      - AWS_DEFAULT_REGION=af-south-1
+      - AWS_NO_SIGN_REQUEST=YES
+      - PYTHONPATH=/env/config
+      - DATACUBE_OWS_CFG=ows_refactored.dev_af_ows_root_cfg.ows_cfg
+    ports:
+      - "8083:8000"
+    volumes:
+       - ./services/ows_refactored:/env/config/ows_refactored/
+    depends_on:
+      db:
+        condition: service_healthy

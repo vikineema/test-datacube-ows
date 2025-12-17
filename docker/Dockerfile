@@ -4,11 +4,11 @@ ENV PYTHONDONTWRITEBYTECODE=true
 ARG MAMBA_DOCKERFILE_ACTIVATE=1 
 
 USER root
-COPY docker/environment.yaml /tmp/
-COPY docker/assets/tflite_runtime-2.20.0-cp312-cp312-linux_x86_64.whl /tmp/assets/
+COPY docker/environment.yaml docker/requirements.txt /tmp/
 
 # Install packages into the empty conda environmemnt base
-RUN  micromamba install --yes --name base  --file /tmp/environment.yaml --verbose 
+RUN  micromamba install --yes --name base  --file /tmp/environment.yaml --verbose \
+    && micromamba run --name base pip install --no-cache-dir -r /tmp/requirements.txt
 
 # conda clean
 RUN micromamba clean --all --index-cache --packages --tarballs \
@@ -30,6 +30,7 @@ FROM ubuntu:jammy
 ARG NB_USER="jovyan"
 ARG NB_UID="1000"
 ARG NB_GID="100"
+ARG JUPYTER_PORT="8888"
 
 # Configure python environment.
 # This should be the same prefix 
@@ -45,8 +46,8 @@ ENV DEBIAN_FRONTEND=noninteractive \
     HOME="/home/${NB_USER}" \
     PATH="${PYTHON_ENV}/bin:${PATH}" \
     PROJ_DATA="${PYTHON_ENV}/share/proj" \
-    BUILD_ENV=$BUILD_ENV \
-    JUPYTERLAB_DIR=$PYTHON_ENV/share/jupyter/lab 
+    JUPYTERLAB_DIR=$PYTHON_ENV/share/jupyter/lab \
+    JUPYTER_PORT=${JUPYTER_PORT}
 
 ## Non-root user creation
 # Delete existing user with UID="${NB_UID}" if it exists
@@ -69,7 +70,6 @@ RUN curl "https://awscli.amazonaws.com/awscli-exe-linux-x86_64.zip" -o "awscliv2
 ## Jupyter config
 COPY docker/assets/overrides.json $JUPYTERLAB_DIR/settings/
 COPY docker/assets/jupyter_lab_config.py  $PYTHON_ENV/etc/jupyter/
-COPY docker/assets/jupyter_server_config.py $HOME/.jupyter/
 
 # Enable server extensions
 USER $NB_USER
