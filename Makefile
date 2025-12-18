@@ -52,7 +52,9 @@ explorer-shell: ## Open shell in explorer service
 
 ## OWS
 setup-ows: ## Setup the datacube OWS
-	docker compose up ows
+	docker compose up -d ows
+	docker compose exec ows datacube-ows-update --schema
+	docker compose exec ows datacube-ows-update --views
 
 ows-shell: ## Open shell in ows service
 	docker compose exec ows /bin/bash
@@ -68,3 +70,6 @@ refresh-range:
 ows-init:
 	#docker compose exec ows datacube-ows-update --init
 	docker compose exec ows datacube-ows-update --schema
+
+test-ows-config:
+	docker compose exec ows datacube-ows-cfg check -i /env/config/inventory/dev_af/inventory.json

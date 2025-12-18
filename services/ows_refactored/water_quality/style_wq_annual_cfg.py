@@ -32,7 +32,6 @@ legend = {
     "show_legend": True,
     "title": "Total Suspended Matter",
     "units": "mg/L",
-    # Ticks at 0.0, 0.5 and 1.0
     "begin": "0.0",
     "end": "500.0",
     "decimal_places": 1,

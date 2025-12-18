@@ -82,6 +82,7 @@ services:
       - "8083:8000"
     volumes:
        - ./services/ows_refactored:/env/config/ows_refactored/
+       - ./services/inventory:/env/config/inventory/
     depends_on:
       db:
         condition: service_healthy
