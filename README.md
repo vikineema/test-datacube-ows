@@ -8,7 +8,7 @@ Use the following connection details to connect to the OWS setup in this reposit
 ``` bash
 Local Datacube OWS
 
-localhost:8083/wms?version=1.3.0
+http://localhost:8083/wms?version=1.3.0
 
 ```
 
