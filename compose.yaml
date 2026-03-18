@@ -8,7 +8,7 @@ services:
         - POSTGRES_USER=${POSTGRES_USER}
         - POSTGRES_PASS=${POSTGRES_PASS}
         - ALLOW_IP_RANGE=${ALLOW_IP_RANGE}
-        - POSTGRES_MULTIPLE_EXTENSIONS=${POSTGRES_MULTIPLE_EXTENSIONS}
+        - POSTGRES_MULTIPLE_EXTENSIONS=postgis,hstore,postgis_topology,postgis_raster,pgrouting
         - FORCE_SSL=TRUE
     restart: on-failure
     healthcheck:
@@ -21,7 +21,7 @@ services:
   jupyter:
     build:
       context: .
-      dockerfile: docker/Dockerfile
+      dockerfile: Dockerfile
     environment:
       # $ODC_{environment name}_{option name}
       - ODC_DEFAULT_INDEX_DRIVER=postgis

@@ -27,7 +27,7 @@ add-products: ## Add products to the datacube database:
 
 index-datasets: ## Index datasets from a given path
 	docker compose  exec jupyter s3-to-dc \
-		"s3://deafrica-water-quality-dev/mapping/wq_annual/1-0-0/x200/y034/*/*.stac-item.json" \
+		"s3://deafrica-water-quality/mapping/wq_annual/1-0-0/x200/y034/*/*.stac-item.json" \
 		--no-sign-request --allow-unsafe --stac --log=info wq_annual
 
 jupyter-shell: ## Open shell in jupyter service

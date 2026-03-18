@@ -1,5 +1,31 @@
 from ows_refactored.common.ows_reslim_cfg import reslim_continental
-from ows_refactored.water_quality.style_wq_annual_cfg import style_wq_annual_tsm
+from ows_refactored.water_quality.style_wq_annual_cfg import (
+    style_wq_annual_chla,
+    style_wq_annual_clear_water,
+    style_wq_annual_fai,
+    style_wq_annual_hue,
+    style_wq_annual_ndvi,
+    style_wq_annual_owt,
+    style_wq_annual_tirs,
+    style_wq_annual_tsi,
+    style_wq_annual_tsm,
+    style_wq_annual_water_mask,
+)
+
+bands_wq_annual = {
+    "agm_fai": ["fai", "FAI", "floating_algae_index"],
+    "agm_hue": ["hue", "HUE"],
+    "agm_ndvi": ["ndvi", "NDVI"],
+    "agm_owt": ["owt", "OWT", "optical_water_type"],
+    "chla": ["CHLA", "chlorophyll_a"],
+    "clear_water": [],
+    "tirs_st_ann_max": ["st_max", "max_surface_temperature"],
+    "tirs_st_ann_med": ["st_median", "median_surface_temperature"],
+    "tirs_st_ann_min": ["st_min", "min_surface_temperature"],
+    "tsi": ["TSI", "trophic_state_index"],
+    "tsm": ["TSM", "total_suspended_matter"],
+    "water_mask": [],
+}
 
 layer = {
     "title": "Annual Water Quality Variables",
@@ -19,9 +45,7 @@ click on a tile in the explorer page (https://explorer.dev.digitalearth.africa/p
     "multi_product": False,
     "time_resolution": "summary",
     "default_time": "latest",
-    "bands": {
-        "tsm": [],
-    },
+    "bands": bands_wq_annual,
     "native_crs": "EPSG:6933",
     "native_resolution": [10.0, 10.0],
     "resource_limits": reslim_continental,
@@ -32,8 +56,18 @@ click on a tile in the explorer page (https://explorer.dev.digitalearth.africa/p
         "manual_merge": False,
     },
     "styling": {
-        # The default_style must match the style's "name" field.
         "default_style": "wq_annual_tsm",
-        "styles": [style_wq_annual_tsm],
+        "styles": [
+            style_wq_annual_tsm,
+            style_wq_annual_tsi,
+            style_wq_annual_ndvi,
+            style_wq_annual_fai,
+            style_wq_annual_hue,
+            style_wq_annual_owt,
+            style_wq_annual_tirs,
+            style_wq_annual_chla,
+            style_wq_annual_water_mask,
+            style_wq_annual_clear_water,
+        ],
     },
 }
