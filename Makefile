@@ -53,23 +53,20 @@ explorer-shell: ## Open shell in explorer service
 ## OWS
 setup-ows: ## Setup the datacube OWS
 	docker compose up -d ows
+	# Create or update the OWS database schema, including the 
+	# spatio-temporal materialised views
 	docker compose exec ows datacube-ows-update --schema
+	# Cleanup up any datacube-ows 1.8.x tables/views
+	docker compose exec ows datacube-ows-update --cleanup --env default
+	# Refresh the ODC spatio-temporal materialised views
 	docker compose exec ows datacube-ows-update --views
+	# Update ranges for all configured OWS layers
+	docker compose exec ows datacube-ows-update
 
 ows-shell: ## Open shell in ows service
 	docker compose exec ows /bin/bash
 
 reset: down up init add-products index-datasets setup-explorer setup-ows
-
-refresh-views:
-	docker compose exec ows datacube-ows-update --views
-
-refresh-range:
-	docker compose exec ows datacube-ows-update wq_annual
-
-ows-init:
-	#docker compose exec ows datacube-ows-update --init
-	docker compose exec ows datacube-ows-update --schema
 
 test-ows-config:
 	docker compose exec ows datacube-ows-cfg check -i /env/config/inventory/dev_af/inventory.json
