@@ -123,8 +123,32 @@ ows_cfg = {
                             "abstract": """Surface water""",
                             "layers": [
                                 {
-                                    "include": "ows_refactored.water_quality.ows_wq_annual_cfg.layer",
-                                    "type": "python",
+                                    "title": "Water Observations from Space (WOfS)",
+                                    "abstract": """Water Observations from Space (WOfS)""",
+                                    "layers": [
+                                        {
+                                            "include": "ows_refactored.wofs.ows_wofs_ls_cfg.layer",
+                                            "type": "python",
+                                        },
+                                        {
+                                            "include": "ows_refactored.wofs.ows_wofs_ls_annual_cfg.layer",
+                                            "type": "python",
+                                        },
+                                        {
+                                            "include": "ows_refactored.wofs.ows_wofs_ls_alltime_cfg.layer",
+                                            "type": "python",
+                                        },
+                                    ],
+                                },
+                                {
+                                    "title": "Waterbodies Service",
+                                    "abstract": """Waterbodies Service""",
+                                    "layers": [],
+                                },
+                                {
+                                    "title": "Water Quality Monitoring Service",
+                                    "abstract": """Water Quality Monitoring Service""",
+                                    "layers": [],
                                 },
                             ],
                         }

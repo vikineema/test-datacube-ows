@@ -1,25 +1,41 @@
 {
-    "total_layers_count": 1,
+    "total_layers_count": 3,
     "layers": [
         {
-            "layer": "wq_annual",
+            "layer": "wofs_ls",
             "product": [
-                "wq_annual"
+                "wofs_ls"
             ],
-            "styles_count": 12,
+            "styles_count": 2,
             "styles_list": [
-                "wq_annual_tsm",
-                "wq_annual_tsi",
-                "wq_annual_ndvi",
-                "wq_annual_fai",
-                "wq_annual_hue",
-                "wq_annual_owt",
-                "wq_annual_chla",
-                "wq_annual_tirs_max",
-                "wq_annual_tirs_med",
-                "wq_annual_tirs_min",
-                "wq_annual_water_mask",
-                "wq_annual_clear_water"
+                "observations",
+                "wet"
+            ]
+        },
+        {
+            "layer": "wofs_ls_summary_annual",
+            "product": [
+                "wofs_ls_summary_annual"
+            ],
+            "styles_count": 4,
+            "styles_list": [
+                "wofs_summary_annual_frequency",
+                "legacy_wofs_summary_annual_frequency",
+                "wofs_summary_annual_wet",
+                "wofs_summary_annual_clear"
+            ]
+        },
+        {
+            "layer": "wofs_ls_summary_alltime",
+            "product": [
+                "wofs_ls_summary_alltime"
+            ],
+            "styles_count": 4,
+            "styles_list": [
+                "wofs_summary_alltime_frequency",
+                "legacy_wofs_summary_alltime_frequency",
+                "wofs_summary_alltime_wet",
+                "wofs_summary_alltime_clear"
             ]
         }
     ]
