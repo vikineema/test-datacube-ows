@@ -69,7 +69,8 @@ services:
       - ${EXPLORER_PORT}:8080
 
   ows:
-    image: ghcr.io/opendatacube/ows:develop
+    # image: ghcr.io/opendatacube/ows:develop
+    image: ghcr.io/opendatacube/ows:1.9.11
     environment:
       - ODC_ENVIRONMENT=default
       - ODC_DEFAULT_INDEX_DRIVER=postgis

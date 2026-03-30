@@ -111,4 +111,4 @@ test-ows-config:
 
 copy-config:
 	# cp ~/dev/digitalearthafrica/config/services/ows_refactored/water_quality/* services/ows_refactored/water_quality/
-	cp ~/dev/digitalearthafrica/config/services/ows_refactored/wofs/* services/ows_refactored/wofs/
+	cp ~/dev/digitalearthafrica/config/services/ows_refactored/agriculture/* services/ows_refactored/agriculture/
