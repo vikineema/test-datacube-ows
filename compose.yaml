@@ -23,10 +23,11 @@ services:
       context: .
       dockerfile: Dockerfile
     environment:
-      # $ODC_{environment name}_{option name}
-      - ODC_DEFAULT_INDEX_DRIVER=postgis
-      # Database connection URL: postgresql://<username>:<password>@<hostname>:<port>/<database>
-      - ODC_DEFAULT_DB_URL=postgresql://${POSTGRES_USER}:${POSTGRES_PASS}@db:5432/${POSTGRES_DB}
+      - DB_HOSTNAME=db
+      - DB_PORT=5432
+      - DB_USERNAME=${POSTGRES_USER}
+      - DB_PASSWORD=${POSTGRES_PASS}
+      - DB_DATABASE=${POSTGRES_DB}
       - GS_NO_SIGN_REQUEST=YES
       - AWS_NO_SIGN_REQUEST=YES
       - AWS_DEFAULT_REGION=af-south-1
@@ -48,12 +49,13 @@ services:
     restart: always
 
   explorer:
-    image: opendatacube/explorer:3.1.0-49-g8fc48b0a
+    image: ghcr.io/opendatacube/explorer:2.12.4
     environment:
-      # $ODC_{environment name}_{option name}
-      - ODC_DEFAULT_INDEX_DRIVER=postgis
-      # Database connection URL: postgresql://<username>:<password>@<hostname>:<port>/<database>
-      - ODC_DEFAULT_DB_URL=postgresql://${POSTGRES_USER}:${POSTGRES_PASS}@db:5432/${POSTGRES_DB}
+      - DB_HOSTNAME=db
+      - DB_PORT=5432
+      - DB_USERNAME=${POSTGRES_USER}
+      - DB_PASSWORD=${POSTGRES_PASS}
+      - DB_DATABASE=${POSTGRES_DB}
       - FLASK_ENV=development
       - FLASK_APP=cubedash
       - FLASK_DEBUG=1
@@ -69,12 +71,13 @@ services:
       - ${EXPLORER_PORT}:8080
 
   ows:
-    # image: ghcr.io/opendatacube/ows:develop
-    image: ghcr.io/opendatacube/ows:1.9.11
+    image: opendatacube/ows:1.8.42.post20_gaa67e0be
     environment:
-      - ODC_ENVIRONMENT=default
-      - ODC_DEFAULT_INDEX_DRIVER=postgis
-      - ODC_DEFAULT_DB_URL=postgresql://${POSTGRES_USER}:${POSTGRES_PASS}@db:5432/${POSTGRES_DB}
+      - DB_HOSTNAME=db
+      - DB_PORT=5432
+      - DB_USERNAME=${POSTGRES_USER}
+      - DB_PASSWORD=${POSTGRES_PASS}
+      - DB_DATABASE=${POSTGRES_DB}
       - AWS_DEFAULT_REGION=af-south-1
       - AWS_NO_SIGN_REQUEST=YES
       - PYTHONPATH=/env/config

@@ -3,14 +3,14 @@ jupyterlab
 jupyterlab-iframe
 jupyter-resource-usage
 # datacube + odc ecosystem
-datacube[performance,distributed,s3]>=1.9.0
-datacube-ows>=1.9.10
+datacube[performance,distributed,s3]<1.9
+datacube-ows==1.8.42
 eodatasets3
 odc-apps-dc-tools
 odc-cloud[ASYNC]
 odc-dscache
 odc-geo
-odc-stats>=1.9.6
+odc-stats
 geopandas[all]
 # Linting
 ruff

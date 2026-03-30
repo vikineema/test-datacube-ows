@@ -87,10 +87,8 @@ setup-ows: ## Setup the datacube OWS
 	docker compose up -d ows
 	# Create or update the OWS database schema, including the 
 	# spatio-temporal materialised views
-	docker compose exec ows datacube-ows-update --schema
+	docker compose exec ows datacube-ows-update  --schema --role opendatacube
 	make test-ows-config
-	# Cleanup up any datacube-ows 1.8.x tables/views
-	docker compose exec ows datacube-ows-update --cleanup --env default
 	# Refresh the ODC spatio-temporal materialised views
 	docker compose exec ows datacube-ows-update --views
 	# Update ranges for all configured OWS layers
