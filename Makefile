@@ -58,7 +58,7 @@ index-datasets-esa_worldcereal_wintercereals_irrigation:
 			"s3://deafrica-input-datasets/esa_worldcereal/irrigation/tc-wintercereals/**/*.stac-item.json" \
 			--no-sign-request --allow-unsafe --stac --log=info esa_worldcereal_wintercereals_irrigation
 
-index-esa-worldcereal: index-datasets-esa_worldcereal_activecropland index-datasets-esa_worldcereal_maize_irrigation index-datasets-esa_worldcereal_maize_main index-datasets-esa_worldcereal_temporarycrops index-datasets-esa_worldcereal_wintercereals index-datasets-esa_worldcereal_wintercereals_irrigation
+index-esa-worldcereal: index-datasets-esa_worldcereal_activecropland index-datasets-esa_worldcereal_maize_active index-datasets-esa_worldcereal_maize_irrigation index-datasets-esa_worldcereal_maize_main index-datasets-esa_worldcereal_temporarycrops index-datasets-esa_worldcereal_wintercereals index-datasets-esa_worldcereal_wintercereals_irrigation
 
 setup: init add-products index-esa-worldcereal setup-explorer
 
