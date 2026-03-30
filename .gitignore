@@ -17,6 +17,8 @@ products/**
 *.vscode/**
 *.vscode-server/**
 *.dotnet/**
+# Jupyter notebook
+**/.Trash-1000/**
 # Python install files
 **/__pycache__/**
 **/*.egg-info/**

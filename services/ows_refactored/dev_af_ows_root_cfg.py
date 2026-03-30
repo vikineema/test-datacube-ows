@@ -115,20 +115,26 @@ ows_cfg = {
             "layers": [
                 # A list of configurations for layers (WMS/WMTS) (or coverages (WCS)) to be served.
                 {
-                    "title": "DE Africa Continental Services",
-                    "abstract": """DE Africa Continental Services""",
+                    "title": "External Datasets",
+                    "abstract": """External Datasets""",
                     "layers": [
                         {
-                            "title": "Surface water",
-                            "abstract": """Surface water""",
+                            "title": "Agriculture",
+                            "abstract": """Agriculture""",
                             "layers": [
                                 {
-                                    "include": "ows_refactored.water_quality.ows_wq_annual_cfg.layer",
-                                    "type": "python",
-                                },
-                            ],
+                                    "title": "ESA WorldCereal",
+                                    "abstract": """ESA WorldCereal""",
+                                    "layers": [
+                                        {
+                                            "include": "ows_refactored.agriculture.ows_esa_worldcereal.activecropland_layer",
+                                            "type": "python",
+                                        }
+                                    ]
+                                }
+                            ]
                         }
-                    ],
+                    ]
                 }
             ],
         }

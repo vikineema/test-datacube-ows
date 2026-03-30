@@ -2,25 +2,16 @@
     "total_layers_count": 1,
     "layers": [
         {
-            "layer": "wq_annual",
+            "layer": "esa_worldcereal_activecropland",
             "product": [
-                "wq_annual"
+                "esa_worldcereal_activecropland"
             ],
-            "styles_count": 12,
+            "styles_count": 1,
             "styles_list": [
-                "wq_annual_tsm",
-                "wq_annual_tsi",
-                "wq_annual_ndvi",
-                "wq_annual_fai",
-                "wq_annual_hue",
-                "wq_annual_owt",
-                "wq_annual_chla",
-                "wq_annual_tirs_max",
-                "wq_annual_tirs_med",
-                "wq_annual_tirs_min",
-                "wq_annual_water_mask",
-                "wq_annual_clear_water"
+                "style_activecropland"
             ]
         }
+        
     ]
+
 }

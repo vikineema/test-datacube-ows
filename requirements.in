@@ -11,6 +11,6 @@ odc-cloud[ASYNC]
 odc-dscache
 odc-geo
 odc-stats>=1.9.6
-geopandas 
+geopandas[all]
 # Linting
 ruff

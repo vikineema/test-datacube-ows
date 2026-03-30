@@ -1,3 +1,5 @@
+# reslim
+
 # Defines cache control on GetMap requests
 dataset_cache_rules = [
     {
@@ -29,3 +31,5 @@ reslim_continental = {
         "max_datasets": 32,  # Defaults to no dataset limit
     },
 }
+
+reslim_land_cover = reslim_continental

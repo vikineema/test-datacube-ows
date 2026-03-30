@@ -6,8 +6,6 @@ include  .env
 ENV_FILE =  $(abspath .env)
 export ENV_FILE
 
-setup: build up init
-
 build:
 	docker compose build
 
@@ -25,10 +23,14 @@ add-products: ## Add products to the datacube database:
 	# Add products to be added to the csv file products/products.csv
 	docker compose exec -T jupyter dc-sync-products products/products.csv --update-if-exists
 
-index-datasets: ## Index datasets from a given path
+index-datasets-esa_worldcereal_activecropland: ## Index datasets from a given path
 	docker compose  exec jupyter s3-to-dc \
-		"s3://deafrica-water-quality/mapping/wq_annual/1-0-0/x200/y034/*/*.stac-item.json" \
-		--no-sign-request --allow-unsafe --stac --log=info wq_annual
+		"s3://deafrica-input-datasets/esa_worldcereal/activecropland/tc-wintercereals/**/*.stac-item.json" \
+		--no-sign-request --allow-unsafe --stac --log=info esa_worldcereal_activecropland
+
+index-esa-worldcereal: index-datasets-esa_worldcereal_activecropland
+
+setup: init add-products index-esa-worldcereal setup-explorer
 
 jupyter-shell: ## Open shell in jupyter service
 	docker compose  exec jupyter /bin/bash
@@ -56,6 +58,7 @@ setup-ows: ## Setup the datacube OWS
 	# Create or update the OWS database schema, including the 
 	# spatio-temporal materialised views
 	docker compose exec ows datacube-ows-update --schema
+	make test-ows-config
 	# Cleanup up any datacube-ows 1.8.x tables/views
 	docker compose exec ows datacube-ows-update --cleanup --env default
 	# Refresh the ODC spatio-temporal materialised views
@@ -63,10 +66,19 @@ setup-ows: ## Setup the datacube OWS
 	# Update ranges for all configured OWS layers
 	docker compose exec ows datacube-ows-update
 
+down-ows:
+	docker compose down --remove-orphans ows
+
 ows-shell: ## Open shell in ows service
 	docker compose exec ows /bin/bash
 
-reset: down up init add-products index-datasets setup-explorer setup-ows
+reset-ows: down-ows setup-ows
+
+full-reset: down up init add-products index-datasets setup-explorer setup-ows
 
 test-ows-config:
 	docker compose exec ows datacube-ows-cfg check -i /env/config/inventory/dev_af/inventory.json
+
+copy-config:
+	# cp ~/dev/digitalearthafrica/config/services/ows_refactored/water_quality/* services/ows_refactored/water_quality/
+	cp ~/dev/digitalearthafrica/config/services/ows_refactored/wofs/* services/ows_refactored/wofs/
