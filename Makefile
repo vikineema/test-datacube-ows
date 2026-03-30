@@ -28,7 +28,37 @@ index-datasets-esa_worldcereal_activecropland: ## Index datasets from a given pa
 		"s3://deafrica-input-datasets/esa_worldcereal/activecropland/tc-wintercereals/**/*.stac-item.json" \
 		--no-sign-request --allow-unsafe --stac --log=info esa_worldcereal_activecropland
 
-index-esa-worldcereal: index-datasets-esa_worldcereal_activecropland
+index-datasets-esa_worldcereal_maize_active: ## Index datasets from a given path
+	docker compose  exec jupyter s3-to-dc \
+		"s3://deafrica-input-datasets/esa_worldcereal/activecropland/tc-maize-main/**/*.stac-item.json" \
+		--no-sign-request --allow-unsafe --stac --log=info esa_worldcereal_maize_active
+
+index-datasets-esa_worldcereal_maize_irrigation: ## Index datasets from a given path
+	docker compose  exec jupyter s3-to-dc \
+		"s3://deafrica-input-datasets/esa_worldcereal/irrigation/tc-maize-main/**/*.stac-item.json" \
+		--no-sign-request --allow-unsafe --stac --log=info esa_worldcereal_maize_irrigation
+
+index-datasets-esa_worldcereal_maize_main: ## Index datasets from a given path
+	docker compose  exec jupyter s3-to-dc \
+		"s3://deafrica-input-datasets/esa_worldcereal/maize/tc-maize-main/**/*.stac-item.json" \
+		--no-sign-request --allow-unsafe --stac --log=info esa_worldcereal_maize_main
+
+index-datasets-esa_worldcereal_temporarycrops:
+	docker compose  exec jupyter s3-to-dc \
+			"s3://deafrica-input-datasets/esa_worldcereal/temporarycrops/tc-annual/**/*.stac-item.json" \
+			--no-sign-request --allow-unsafe --stac --log=info esa_worldcereal_temporarycrops
+
+index-datasets-esa_worldcereal_wintercereals:
+	docker compose  exec jupyter s3-to-dc \
+			"s3://deafrica-input-datasets/esa_worldcereal/wintercereals/tc-wintercereals/**/*.stac-item.json" \
+			--no-sign-request --allow-unsafe --stac --log=info esa_worldcereal_wintercereals
+
+index-datasets-esa_worldcereal_wintercereals_irrigation:
+	docker compose  exec jupyter s3-to-dc \
+			"s3://deafrica-input-datasets/esa_worldcereal/irrigation/tc-wintercereals/**/*.stac-item.json" \
+			--no-sign-request --allow-unsafe --stac --log=info esa_worldcereal_wintercereals_irrigation
+
+index-esa-worldcereal: index-datasets-esa_worldcereal_activecropland index-datasets-esa_worldcereal_maize_irrigation index-datasets-esa_worldcereal_maize_main index-datasets-esa_worldcereal_temporarycrops index-datasets-esa_worldcereal_wintercereals index-datasets-esa_worldcereal_wintercereals_irrigation
 
 setup: init add-products index-esa-worldcereal setup-explorer
 
