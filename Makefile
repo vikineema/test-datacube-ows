@@ -30,6 +30,23 @@ index-datasets: ## Index datasets from a given path
 		"s3://deafrica-water-quality/mapping/wq_annual/1-0-0/x200/y034/*/*.stac-item.json" \
 		--no-sign-request --allow-unsafe --stac --log=info wq_annual
 
+index-datasets-wofs: ## Index datasets from a given path
+	docker compose  exec jupyter s3-to-dc \
+		"s3://deafrica-services/wofs_ls/1-0-0/175/080/2026/03/**/*.stac-item.json" \
+		--no-sign-request --allow-unsafe --stac --log=info wofs_ls
+
+index-datasets-wofs-annual: ## Index datasets from a given path
+	docker compose  exec jupyter s3-to-dc \
+		"s3://deafrica-services/wofs_ls_summary_annual/1-0-0/x200/y034/2025--P1Y/*.stac-item.json" \
+		--no-sign-request --allow-unsafe --stac --log=info wofs_ls_summary_annual
+
+index-datasets-wofs-alltime: ## Index datasets from a given path
+	docker compose  exec jupyter s3-to-dc \
+		"s3://deafrica-services/wofs_ls_summary_alltime/1-0-0/x200/y034/1984--P42Y/*.stac-item.json" \
+		--no-sign-request --allow-unsafe --stac --log=info wofs_ls_summary_alltime
+
+index-surfac-water: index-datasets index-datasets-wofs index-datasets-wofs-annual index-datasets-wofs-alltime
+
 jupyter-shell: ## Open shell in jupyter service
 	docker compose  exec jupyter /bin/bash
 
@@ -53,6 +70,7 @@ explorer-shell: ## Open shell in explorer service
 ## OWS
 setup-ows: ## Setup the datacube OWS
 	docker compose up -d ows
+	make test-ows-config
 	# Create or update the OWS database schema, including the 
 	# spatio-temporal materialised views
 	docker compose exec ows datacube-ows-update --schema
@@ -63,10 +81,19 @@ setup-ows: ## Setup the datacube OWS
 	# Update ranges for all configured OWS layers
 	docker compose exec ows datacube-ows-update
 
+down-ows:
+	docker compose down --remove-orphans ows
+
 ows-shell: ## Open shell in ows service
 	docker compose exec ows /bin/bash
 
-reset: down up init add-products index-datasets setup-explorer setup-ows
+reset-ows: down-ows setup-ows
+
+full-reset: down up init add-products index-datasets setup-explorer setup-ows
 
 test-ows-config:
 	docker compose exec ows datacube-ows-cfg check -i /env/config/inventory/dev_af/inventory.json
+
+copy-config:
+	# cp ~/dev/digitalearthafrica/config/services/ows_refactored/water_quality/* services/ows_refactored/water_quality/
+	cp ~/dev/digitalearthafrica/config/services/ows_refactored/wofs/* services/ows_refactored/wofs/
