@@ -28,8 +28,18 @@ style_activecropland = create_style(
     "style_activecropland",
     "Active cropland",
     [
-        {"title": "Inactive cropland", "abstract": "", "values": [0], "color": "#f50707"},
-        {"title": "Active cropland", "abstract": "", "values": [100], "color": "#004f01"},
+        {
+            "title": "Inactive cropland",
+            "abstract": "",
+            "values": [0],
+            "color": "#f50707",
+        },
+        {
+            "title": "Active cropland",
+            "abstract": "",
+            "values": [100],
+            "color": "#004f01",
+        },
     ],
 )
 
@@ -54,7 +64,12 @@ style_temporarycrops = create_style(
     "style_temporarycrops",
     "Temporary crops",
     [
-        {"title": "Temporary crops", "abstract": "", "values": [100], "color": "#f50707"},
+        {
+            "title": "Temporary crops",
+            "abstract": "",
+            "values": [100],
+            "color": "#f50707",
+        },
     ],
 )
 
@@ -62,7 +77,12 @@ style_wintercereals = create_style(
     "style_wintercereals",
     "Winter cereals",
     [
-        {"title": "Winter cereals", "abstract": "", "values": [100], "color": "#f7882d"},
+        {
+            "title": "Winter cereals",
+            "abstract": "",
+            "values": [100],
+            "color": "#f7882d",
+        },
     ],
 )
 
@@ -88,16 +108,14 @@ def create_esa_layer(product_name, title, default_style, abstract=None):
         "name": product_name,
         "abstract": abstract,
         "product_name": product_name,
-
         # Make it a timeless mosaic layer
         "mosaic_date_func": {
             # TODO: Remove and use datacube_ows.time_utils.rolling_window_ndays
             # when datacube-ows is upgraded to ghcr.io/opendatacube/ows:1.9.11 or later.
             "function": "ows_refactored.common.ows_util_tools.rolling_window_ndays",
             "pass_layer_cfg": True,
-            "kwargs": {"ndays": 10000},   # large window collapses all timestamps
+            "kwargs": {"ndays": 10000},  # large window collapses all timestamps
         },
-
         "bands": {"classification": []},
         "resource_limits": reslim_land_cover,
         "image_processing": {
@@ -113,21 +131,48 @@ def create_esa_layer(product_name, title, default_style, abstract=None):
         },
     }
 
+
 # ----------------------------
 # Create all layers
 # ----------------------------
 
 
-activecropland_layer = create_esa_layer("esa_worldcereal_activecropland", "ESA WorldCereal Active Cropland", style_activecropland)
+activecropland_layer = create_esa_layer(
+    "esa_worldcereal_activecropland",
+    "ESA WorldCereal Active Cropland",
+    style_activecropland,
+)
 
-maize_active_layer = create_esa_layer("esa_worldcereal_maize_active", "ESA WorldCereal Active Maize Cropland", style_activecropland)
+maize_active_layer = create_esa_layer(
+    "esa_worldcereal_maize_active",
+    "ESA WorldCereal Active Maize Cropland",
+    style_activecropland,
+)
 
-maize_irrigation_layer = create_esa_layer("esa_worldcereal_maize_irrigation", "ESA WorldCereal Irrigated Maize", style_irrigated)
+maize_irrigation_layer = create_esa_layer(
+    "esa_worldcereal_maize_irrigation",
+    "ESA WorldCereal Irrigated Maize",
+    style_irrigated,
+)
 
-wintercereals_irrigation_layer = create_esa_layer("esa_worldcereal_wintercereals_irrigation", "ESA WorldCereal Winter Cereals – Irrigation", style_irrigated)
+wintercereals_irrigation_layer = create_esa_layer(
+    "esa_worldcereal_wintercereals_irrigation",
+    "ESA WorldCereal Winter Cereals – Irrigation",
+    style_irrigated,
+)
 
-maize_main_layer = create_esa_layer("esa_worldcereal_maize_main", "ESA WorldCereal Main-Season Maize", style_maize)
+maize_main_layer = create_esa_layer(
+    "esa_worldcereal_maize_main", "ESA WorldCereal Main-Season Maize", style_maize
+)
 
-temporarycrops_layer = create_esa_layer("esa_worldcereal_temporarycrops", "ESA WorldCereal Temporary Cropland Extent", style_temporarycrops)
+temporarycrops_layer = create_esa_layer(
+    "esa_worldcereal_temporarycrops",
+    "ESA WorldCereal Temporary Cropland Extent",
+    style_temporarycrops,
+)
 
-wintercereals_layer = create_esa_layer("esa_worldcereal_wintercereals", "ESA WorldCereal Winter Cereals", style_wintercereals)
+wintercereals_layer = create_esa_layer(
+    "esa_worldcereal_wintercereals",
+    "ESA WorldCereal Winter Cereals",
+    style_wintercereals,
+)

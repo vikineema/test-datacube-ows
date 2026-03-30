@@ -153,12 +153,12 @@ ows_cfg = {
                                         {
                                             "include": "ows_refactored.agriculture.ows_esa_worldcereal.wintercereals_irrigation_layer",
                                             "type": "python",
-                                        }
-                                    ]
+                                        },
+                                    ],
                                 }
-                            ]
+                            ],
                         }
-                    ]
+                    ],
                 }
             ],
         }

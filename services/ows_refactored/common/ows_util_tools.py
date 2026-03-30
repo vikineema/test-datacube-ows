@@ -7,7 +7,7 @@ def rolling_window_ndays(
     available_dates,
     layer_cfg,
     ndays: int = 6,
-) :
+):
     if ndays > len(available_dates):
         days = available_dates
         idx = -len(available_dates)
